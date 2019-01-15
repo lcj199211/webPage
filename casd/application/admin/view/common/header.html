@@ -1,0 +1,64 @@
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">后台管理系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="{:url('/admin/index')}">主页</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">首页管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="{:url('/admin/banner')}">轮播图管理</a></dd>
+                    <dd><a href="{:url('/admin/homeText')}">中部文字模块</a></dd>
+                    <dd><a href="{:url('/admin/homeImg')}">图片模块</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="{:url('/admin/category')}">栏目管理</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">栏目内容管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="{:url('/admin/single')}">单页管理</a></dd>
+                    <dd><a href="{:url('/admin/pictureList')}">图片列表管理</a></dd>
+                    <dd><a href="{:url('/admin/timeLine')}">时间线管理</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="{:url('/admin/tags')}">Tag管理</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">Tag内容管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="{:url('/admin/details')}">详情页</a></dd>
+                    <dd><a href="{:url('/admin/TagImgList')}">Tag图片列表</a></dd>
+                    <dd><a href="{:url('/admin/news')}">新闻</a></dd>
+                    <dd><a href="{:url('/admin/recruit')}">招聘</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="{:url('/admin/system')}">系统设置</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    {$Request.session.username}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="{:url('/admin/edit/'.$Request.session.uid)}">修改密码</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="javascript:;" onclick="loginOut()">退出</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    function loginOut(){
+            $.ajax({
+                url:"{:url('login/loginOut')}",
+                type:'get',
+                dataType:'json',
+                success:function(res){
+                    if(res){
+                        window.location.href="{:url('/admin/login')}"
+                    }
+                }
+            });
+        };
+</script>

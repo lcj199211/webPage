@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <title>{$categoryPos['1']['name']}-诚济天下，安惠万家!</title>
+    <meta name="keywords" content="诚安时代,诚安建设,诚安计划,传诚教育,建设公司,教育公司,传诚投资">
+    <meta name="description" content="诚安时代”是广州传诚投资有限公司旗下品牌，由传诚投资、传诚教育、诚安科技和诚安建设组成的创新服务型企业。通过投资诚信产业、发展诚信客户、培育诚信人才、建立诚信系统，服务于建设和教育产业。以此践行、弘扬、共享诚信和安心的价值，从而实现“诚济天下，安惠万家”的企业格言。">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="Content-Language" content="zh-CN">
+    <link rel="stylesheet" href="<?php echo autoVersion('/css/reset.css');?>">
+    <link rel="stylesheet" href="<?php echo autoVersion('/css/base.css'); ?>">
+    <link rel="stylesheet" href="<?php echo autoVersion('/css/story.css'); ?>">
+    <script type="text/javascript" src="<?php echo autoVersion('/js/jquery.js'); ?>"></script>
+    {include file="common/ie_testing"}
+</head>
+<body>
+<div id="content">
+    <!-- 导航头部 !-->
+    {include file="common/nav"}
+    <!--banner-->
+    {include file="common/bg_img"}
+    <!--位置-->
+    {include file="common/location"}
+    <!--内容-->
+    <div class="content clearfix">
+        <div class="header-title">
+            <p class="title">发展历程</p>
+            <p class="subtitle">Development History</p>
+        </div>
+        <div class="postbodytext">
+            <p class="title">
+                <span>{$systems.desc}</span>
+                <br>
+            </p>
+            <p class="topline"><br></p>
+            <hr>
+        </div>
+        <div>
+            <div class="about-events">
+                <ul class="clearfix">
+                    {volist name="timeLineRes" id="vo"}
+                    <li class="clearfix">
+                        <p>
+                            <span class="sp1">{$vo.title}</span>
+                            <span class="sp2">{$vo.subtitle}</span>
+                        </p>
+                        <span class="icon-about"></span>
+                        <span class="bordeR"> </span>
+                        <div>
+                            <p>{$vo.desc}</p>
+                        </div>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+            <span class="arrow arrow-7 arrow-left"></span>
+        </div>
+    </div>
+    <!-- footer部分 -->
+    {include file="common/footer"}
+</div>
+<script type="text/javascript" src="<?php echo autoVersion('/js/common.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo autoVersion('/js/base.js'); ?>"></script>
+</body>
+</html>

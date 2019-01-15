@@ -1,0 +1,93 @@
+    <div class="header">
+    <div class="header-main clearfix">
+        <a href="/" id="logo"><img src="__INDEX__/images/logo.png" height="60"></a>
+        <span>{$systems.telephone}</span>
+    </div>
+</div>
+<div id="nav" class="navlute clearfix">
+    <div class="nav-content">
+        <ul class="nav">
+            <li class="navitem {if condition="$category_id eq null"}navhover{/if}">
+                <a class="nav-a" href="{:url('/')}" target="_self"><span data-title="首页">走进诚安</span></a>
+            </li>
+            {volist name="categoryRes" id="vo"}
+
+            <li class="navitem
+                {if condition="$category_id neq null"}
+                    {empty name="$categoryPos['1']"}
+                        {if condition="$vo['id'] eq $categoryPos['id']"}navhover{/if}
+                    {else /}
+                        {if condition="$vo['id'] eq $categoryPos['1']['pid']"}navhover{/if}
+                    {/empty}
+                {/if}
+
+            "><!--给父导航加选中calss-->
+                <a class="nav-a" href="
+                {if condition = "$vo['children'] neq 0"}
+                    javascript:;
+                {else/}
+                    {if condition = "$v['type'] eq 1"}
+                        /single?category_id={$vo.id}
+                    {elseif condition="$v['type'] eq 2"}
+                        /tag_list?category_id={$vo.id}&tags_id={$vo.tags_id}
+                    {elseif condition="$v['type'] eq 3"}
+                        /img_list?category_id={$vo.id}
+                    {elseif condition="$v['type'] eq 6"}
+                        /course?category_id={$vo.id}
+                    {else /}
+                        javascript:;
+                    {/if}
+                {/if}" target="_self"><span data-title="{$vo.name}">{$vo.name}</span></a>
+                {if condition="$vo['children'] neq 0"}
+                <ul class="subnav">
+                    <?php foreach($vo['children'] as $k => $v):?>
+                    <li>
+                        <a href="
+                        <?php
+                            if($v['type'] == 1){
+                                echo '/single?category_id='.$v['id'];
+                            };
+                            if($v['type'] == 2){
+                                echo '/tag_list?category_id='.$v['id'].'&tags_id='.$v['tags_id'];
+                            };
+                            if($v['type'] == 3){
+                                echo '/img_list?category_id='.$v['id'];
+                            };
+                            if($v['type'] == 6){
+                                echo '/course?category_id='.$v['id'];
+                            };
+                        ?>" target="_self"><span data-title="<?php echo $v['name']; ?>"><?php echo $v['name']; ?></span></a>
+                    </li>
+                    <?php endforeach;?>
+                </ul>
+                {/if}
+            </li>
+            {/volist}
+        </ul>
+        <div class="search">
+            <a href="http://www.ca315189.com/" target="_blank">
+                <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe7ae;</i>猪猴生态平台</button>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="nav-null"></div>
+<script>
+    // //导航
+    // var url = window.location.href;
+    // //console.log(url);
+    // var index = null;
+    // $('.nav .nav-a').each(function (i,n) {
+    //     if (url == n){
+    //         $('.nav li').eq(i).addClass('navhover');
+    //         index = i;
+    //     }
+    // });
+    var navlist = $('.nav').children();
+    navlist.hover(function(){
+        i=$(this).index();
+        navlist.eq(i).addClass('navhover').siblings().removeClass('navhover');
+    },function(){
+        navlist.eq(i).addClass('navhover').siblings().removeClass('navhover');
+    })
+</script>

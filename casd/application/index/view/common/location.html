@@ -1,0 +1,39 @@
+<div class="tabposition">
+    <div class="tabtop">
+        <span>您的位置：</span>
+        <a href="/">首页</a>&gt;
+        <a class="{empty name="$categoryPos['1']"} tabtopactive {/empty} " href="
+        {empty name="$categoryPos['1']"}
+            {if condition="$categoryPos['type'] neq 4"}
+                /tag_list?category_id={$category_id}&tags_id={$tag_id}
+            {/if}
+        {else /}
+            javascript:;
+        {/empty}
+        ">
+
+            {empty name="$categoryPos['1']"}
+                {$categoryPos.name}
+            {else / }
+                {$categoryPos['0']['name']}
+            {/empty}
+
+        </a>
+        {notempty name="$categoryPos['1']"}
+            ><a class="tabtopactive" href="
+            {empty name="$tag_id"}
+                {if condition="$category_type eq 1"}
+                    /single_list?category_id={$category_id}
+                {elseif condition="$category_type eq 3"}
+                    /img_list?category_id={$category_id}
+                {else /}
+                    /course?category_id={$category_id}
+                {/if}
+            {else /}
+                /tag_list?category_id={$category_id}&tags_id={$tag_id}
+            {/empty}"> {$categoryPos['1']['name']}</a>
+        {/notempty}
+
+
+    </div>
+</div>

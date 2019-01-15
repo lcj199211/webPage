@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{include title="诚安时代" file="common/head"}
+<body class="layui-layout-body">
+{include file="common/header"}
+   <!-- 主体区域 -->
+  <div class="layui-main">
+      <div class="logo">
+          <img src="__ADMIN__/images/logo.jpg" alt="">
+      </div>
+      <h1 style="text-align: center;padding: 30px 0;">------------------------- 后台管理系统 -------------------------</h1>
+        <blockquote class="layui-elem-quote">系统信息</blockquote>
+        <table class="layui-table">
+                <colgroup>
+                  <col width="150">
+                  <col width="">
+                  <col>
+                </colgroup> 
+               
+                <tbody>
+                <tr>
+                    <td>操作系统</td>
+                    <td><?php echo PHP_OS; ?> </td>
+                </tr>
+                <tr>
+                    <td>服务器版本</td>
+                    <td><?PHP echo $_SERVER ['SERVER_SOFTWARE']; ?> </td>
+                </tr>
+                <tr>
+                    <td>PHP版本</td>
+                    <td><?PHP echo PHP_VERSION; ?> </td>
+                </tr>
+                <tr>
+                    <td>ThinkPHP版本</td>
+                    <td><?php echo THINK_VERSION; ?></td>
+                </tr>
+                <tr>
+                    <td>mysql版本</td>
+                    <td><?php echo mysqli_get_client_info(); ?></td>
+                </tr>
+                </tbody>
+              </table>
+  </div>
+  {include file="common/footer"}
+<script src="__ADMIN__/js/base.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <title>诚安时代-诚济天下，安惠万家!</title>
+    <meta name="keywords" content="诚安时代,诚安建设,诚安计划,传诚教育,建设公司,教育公司,传诚投资">
+    <meta name="description" content="诚安时代”是广州传诚投资有限公司旗下品牌，由传诚投资、传诚教育、诚安科技和诚安建设组成的创新服务型企业。通过投资诚信产业、发展诚信客户、培育诚信人才、建立诚信系统，服务于建设和教育产业。以此践行、弘扬、共享诚信和安心的价值，从而实现“诚济天下，安惠万家”的企业格言。">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"> 
+    <meta http-equiv="Content-Language" content="zh-CN">
+    <link rel="stylesheet" href="<?php echo autoVersion('/css/reset.css');?>">
+    <link rel="stylesheet" href="<?php echo autoVersion('/css/base.css'); ?>">
+    <link rel="stylesheet" href="<?php echo autoVersion('/css/index/index.css'); ?>">
+    <script type="text/javascript" src="<?php echo autoVersion('/js/jquery.js'); ?>"></script>
+    <script type="text/javascript" src="<?php echo autoVersion('/js/jquery.SuperSlide.2.1.1.js');?>"></script>
+    {include file="common/ie_testing"}
+</head>
+<body>
+    <div id="content">
+        <!-- 导航头部 !-->
+        {include file="common/nav"}
+        <!-- 轮播图 !-->
+        <div class="aui-banner-slide">
+            <div class="aui-banner-main">
+                <div class="aui-banner-wrapper bd">
+                    <ul>
+                        {volist name="bannerRes" id="vo"}
+                        <li>
+                            <a href="{if condition="$vo['link'] eq null"}javascript:;{else /}{$vo.link}{/if}" title="{$vo.title}" target="_blank">
+                                <img src="{$vo.url}" alt="">
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+                <div class="hd aui-banner-circle">
+                    <ul>
+                        {volist name="bannerRes" id="vo"}
+                        <li class="on"></li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+            <div class="aui-banner-news">
+                <div class="aui-banner-news-box">
+                    <ul>
+                        {volist name="homeTextRes" id="vo"}
+                        <li>
+                            <a href="{if condition="$vo['link'] eq null"}javascript:;{else /}{$vo.link}{/if}">
+                                <div class="aui-bar-pic">
+                                    <img src="{$vo.url}" alt="">
+                                </div>
+                                <div class="aui-bar-head">
+                                    <p class="aui-bar-title">{$vo.title}</p>
+                                    <p class="aui-bar-text">{$vo.desc}</p>
+                                </div>
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 新闻资讯 !-->
+        <div class="news-content clearfix">
+		
+                <div class="news-content-item">
+                    <div class="news-content-top">
+                        {volist name="newsRes['newsData']" id="vo"}
+                        <a href="javascript:;">{$vo.title}</a>
+                        {/volist}
+                    </div>
+                    <div class="news-content-tab">
+                        <ul class="news-content-lists clearfix">
+                            {volist name="newsRes['data']['0']" id="vo"}
+                                <li class="">
+                                    <a target="_blank" href="/article?category_id={$newsRes['category_id']}&tags_id={$vo.tag_id}&article_id={$vo.id}">
+                                        <i>【{$vo.create_time|date="m-d",###}】</i>
+                                        <span>{$vo.title}</span>
+                                    </a>
+                                </li>
+                            {/volist}
+                        </ul>
+                        <ul class="news-content-lists clearfix">
+                            {volist name="newsRes['data']['1']" id="vo"}
+                            <li class="">
+                                <a target="_blank" href="/article?category_id={$newsRes['category_id']}&tags_id={$vo.tag_id}&article_id={$vo.id}">
+                                    <i>【{$vo.create_time|date="m-d",###}】</i>
+                                    <span>{$vo.title}</span>
+                                </a>
+                            </li>
+                            {/volist}
+                        </ul>
+                    </div>
+                </div>
+                <script>
+                $('.news-content-top a').eq(0).addClass('active');
+                $('.news-content-tab ul').eq(1).css('display','none');
+            </script>
+                <div class="box">
+                        <div class="he_slideAllDown">
+                            <img class="he_slideAllDown_img" src="{$homeImgRes['0']['img_url']}" alt="Image 01">
+                            <div class="he_slideAllDown_caption">
+                                <h3 class="he_slideAllDown_caption_h">{$homeImgRes['0']['title']}</h3>
+                                <p class="he_slideAllDown_caption_p">{$homeImgRes['0']['desc']}</p>
+                                <a class="he_slideAllDown_caption_a" href="{$homeImgRes['0']['url']}"></a>
+                            </div>
+                        </div>
+                </div>
+                <div class="box2">
+                    <div class="he_slideAllDown2">
+                        <img class="he_slideAllDown_img" src="{$homeImgRes['1']['img_url']}" alt="Image 01">
+                        <div class="he_slideAllDown_caption">
+                            <h3 class="he_slideAllDown_caption_h">{$homeImgRes['1']['title']}</h3>
+                            <p class="he_slideAllDown_caption_p">{$homeImgRes['1']['desc']}</p>
+                            <a class="he_slideAllDown_caption_a" href="{$homeImgRes['1']['url']}"></a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- footer部分 -->
+    {include file="common/footer"}
+    <script type="text/javascript" src="<?php echo autoVersion('/js/common.js');?>"></script>
+    <script type="text/javascript" src="<?php echo autoVersion('/js/index/index.js');?>"></script>
+    <script type="text/javascript" src="<?php echo autoVersion('/js/base.js');?>"></script>
+    <script type="text/javascript">
+        jQuery(".aui-banner-main").slide({
+            mainCell: ".bd ul",
+           effect:'leftLoop',
+            autoPlay: true,
+            trigger: "click",
+            delayTime: 1000,
+            interTime:4000
+        });
+
+        $(window).on('scroll', function() {
+            if ($(document).scrollTop() > 10) {
+                $('.aui-header-nav').addClass('solid').removeClass('moveDown');
+                $('.aui-header-top').addClass('moveUp');
+            } else {
+                $('.aui-header-nav').removeClass('solid').addClass('moveDown');
+                $('.aui-header-top').removeClass('moveUp');
+            }
+        });
+    </script>
+</body>
+</html>

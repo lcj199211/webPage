@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{include  title="编辑栏目" file="common/head"}
+<body>
+{include file="common/header"}
+<!-- 主体区域 -->
+<div class="layui-main">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>修改栏目</legend>
+    </fieldset>
+      <div class="layui-form" style="width:80%;">
+        <input id="categoryId" type="hidden" value="{$categoryRes.id}">
+        <div class="layui-form-item">
+          <label class="layui-form-label">栏目名称</label>
+          <div class="layui-input-block">
+            <input type="text" id="name" value="{$categoryRes.name}" required placeholder="请输入栏目名称" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">栏目关键词</label>
+          <div class="layui-input-block">
+            <input type="text" id="keywords" value="{$categoryRes.keywords}" required placeholder="关键词请用 ' ，' 分割" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item" style="width:40%;">
+          <label class="layui-form-label">栏目类型</label>
+          <div class="layui-input-block">
+            <select id="type" lay-verify="required">
+              <option {if condition="$categoryRes['type'] eq '单页栏目'"}selected{/if} value="1">单页栏目</option>
+              <option {if condition="$categoryRes['type'] eq '列表栏目'"}selected{/if} value="2">列表栏目</option>
+              <option {if condition="$categoryRes['type'] eq '图片列表'"}selected{/if} value="3">图片列表</option>
+              <option {if condition="$categoryRes['type'] eq '下拉导航'"}selected{/if} value="4">下拉导航</option>
+              <option {if condition="$categoryRes['type'] eq '时间历程'"}selected{/if} value="6">时间历程</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item" style="width:40%;">
+            <label class="layui-form-label">上级栏目</label>
+            <div class="layui-input-block">
+              <select id="pid" lay-verify="required">
+                <option value="0">顶级栏目</option>
+                {volist name="categorys" id="categorys"}
+                {if condition="$categoryRes['id'] neq $categorys['id']" }
+                <option {if condition="$categoryRes['pid'] eq $categorys['id']"}selected{/if} value="{$categorys.id}">{$categorys.name}</option>
+                {/if}
+                {/volist}
+              </select>
+            </div>
+          </div>
+        <div class="layui-form-item layui-form-text">
+          <label class="layui-form-label">栏目描述</label>
+          <div class="layui-input-block">
+            <textarea id="desc" placeholder="请输入内容" class="layui-textarea">{$categoryRes.desc}</textarea>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <button class="layui-btn" onclick="formSubmission()" lay-submit lay-filter="formDemo">立即提交</button>
+          </div>
+        </div>
+    </div>
+</div>
+{include file="common/footer"}
+<script src="__ADMIN__/js/base.js"></script>
+<script>
+  //监听提交
+function formSubmission(){
+    $.ajax({
+        url:"{:url('category/editData')}",
+        type:'post',
+        data:{
+            id:$('#categoryId').val(),
+          name:$('#name').val(),
+          keywords:$('#keywords').val(),
+          type:$('#type').val(),
+          pid:$('#pid').val(),
+          desc:$('#desc').val()
+        },
+        dataType:'json',
+        success:function(res){
+          console.log(res);
+            if(res !== false){
+                layer.msg('修改成功', {icon: 6,time:1200,shade: [0.3, '#000']},function(){
+                    window.history.back(-1);
+                });
+            }else{
+                layer.msg(res, {icon: 5,time:1200,shade: [0.3, '#000']});
+            }
+        }
+    });
+}
+</script>
+</body>
+</html>

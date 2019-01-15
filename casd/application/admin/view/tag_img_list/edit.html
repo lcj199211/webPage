@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{include  title="修改图片内容" file="common/head"}
+<body onunload="window.base.delEditImg();">
+{include file="common/header"}
+<!-- 主体区域 -->
+<div class="layui-main">
+  <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>修改图片内容</legend>
+  </fieldset>
+  <div class="layui-form" style="width:100%;">
+    <input id="id" type="hidden" value="{$TagImglistData.id}">
+    <div class="layui-form-item" style="width:40%;">
+      <label class="layui-form-label">所属tag</label>
+      <div class="layui-input-block">
+        <select id="tagId" lay-verify="required">
+          {volist name="Type" id="vo"}
+          <option {if condition="$TagImglistData['tag_id'] eq $vo['id']"}selected{/if} value="{$vo.id}">{$vo.title}</option>
+          {/volist}
+        </select>
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">图片类型</label>
+      <div class="layui-input-block">
+        <input {if condition="$TagImglistData['type'] eq 1"}checked=""{/if} type="radio" id="sex" name="sex" value="1" title="普通列表" checked="">
+        <input {if condition="$TagImglistData['type'] eq 2"}checked=""{/if} type="radio" id="sex" name="sex" value="2" title="可放大图片列表">
+        <input {if condition="$TagImglistData['type'] eq 3"}checked=""{/if} type="radio" id="sex" name="sex" value="3" title="故事历程">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">图片</label>
+      <div class="layui-input-block">
+        <button type="button" class="layui-btn" id="update">
+          <i class="layui-icon">&#xe67c;</i>上传图片
+          <input type="hidden" id="img_id" value="{$TagImglistData.img_id}" class="layui-input" style="width: 550px;margin: 10px 0 0 110px">
+        </button>
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <img style="margin-left: 110px;" width="350" id="img" src="{$TagImglistData.url}">
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">内容名称</label>
+      <div class="layui-input-block">
+        <input type="text" id="name" value="{$TagImglistData.title}" required placeholder="请输入图片内容标题" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">内容描述</label>
+      <div class="layui-input-block">
+        <textarea id="desc" placeholder="请输入描述内容(不大于250个字符)" class="layui-textarea">{$TagImglistData.desc}</textarea>
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <input id="imgList_id" type="hidden" value="{$TagImglistData.img_id}">
+        <input id="img_eid" type="hidden" value="{$TagImglistData.img_id}">
+        <button class="layui-btn" onclick="formSubmission()" lay-submit lay-filter="formDemo">立即提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+{include file="common/footer"}
+<script src="__ADMIN__/js/base.js"></script>
+<script src="__ADMIN__/js/upload.js"></script>
+<script type="text/javascript">
+
+    //监听提交
+    function formSubmission(){
+        var params = {
+            url:"{:url('TagImgList/editData')}",
+            type:'post',
+            data:{
+                id:$('#id').val(),
+                title:$('#name').val(),
+                desc:$('#desc').val(),
+                tag_id:$('#tagId').val(),
+                img_id: $('#img_id').val(),
+                type:$("[id='sex']:checked").val()
+            },
+            sCallback:function (res) {
+                if (!res.msg){
+                    if(res !== false){
+                        window.onbeforeunload = null;
+                        layer.msg('修改成功', {icon: 6,time:1200,shade: [0.3, '#000']},function(){
+                            window.history.back(-1);
+                        });
+                    }
+                } else{
+                    layer.msg(res.msg, {icon: 5,time:1200,shade: [0.3, '#000']});
+                }
+            }
+        };
+        window.base.getData(params);
+    }
+</script>
+</body>
+</html>

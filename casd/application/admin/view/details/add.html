@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{include  title="添加详情页" file="common/head"}
+<body onunload="window.base.delImg();">
+{include file="common/header"}
+<!-- 主体区域 -->
+<div class="layui-main">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>添加详情页</legend>
+    </fieldset>
+      <div class="layui-form" style="width:100%;">
+        <div class="layui-form-item" style="width:40%;z-index: 20000;">
+          <label class="layui-form-label">所属tag</label>
+          <div class="layui-input-block">
+            <select id="tagId" lay-verify="required">
+              {volist name="TagsType" id="vo"}
+              <option value="{$vo.id}">{$vo.title}</option>
+              {/volist}
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">详情页名称</label>
+          <div class="layui-input-block">
+            <input type="text" id="title" required placeholder="请输入详情页标题" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">详情页副标题</label>
+          <div class="layui-input-block">
+            <input type="text" id="subtitle" required placeholder="请输入详情页副标题" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+          <label class="layui-form-label">详情页内容</label>
+          <div id="editorMenu" class="layui-input-block"></div>
+          <div id="content" class="layui-input-block" style="margin-left:110px !important;height: 550px; border: 1px solid #ccc;position: relative;"></div>
+        </div>
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <input id="imgList_id" type="hidden" value="">
+            <button class="layui-btn" onclick="formSubmission()" lay-submit lay-filter="formDemo">立即提交</button>
+          </div>
+        </div>
+    </div>
+</div>
+{include file="common/footer"}
+<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+<script type="text/javascript" src="__ADMIN__/js/wangEditor.min.js"></script>
+<script src="__ADMIN__/js/base.js"></script>
+<script type="text/javascript">
+    //使用编辑器
+    var E = window.wangEditor;
+    var editor = new E('#editorMenu','#content');
+    editor.customConfig.uploadImgServer = "{:url('/admin/picture')}";
+    //editor.customConfig.debug = true;
+    editor.customConfig.uploadImgMaxLength = 3;
+    editor.customConfig.customAlert = function (info) {
+        // info 是需要提示的内容
+        layer.msg(info, {icon: 5,time:1200,shade: [0.3, '#000']});
+    }
+    editor.customConfig.uploadImgParams = {
+        fileType: 1
+    }
+    editor.customConfig.uploadImgHooks = {
+        before: function (xhr, editor, files) {
+            loading = layer.load(1, {shade: [0.1,'#fff']});
+        },
+        success: function (xhr, editor, result) {
+            //上传图片启用监听浏览器关闭事件
+            window.onbeforeunload= function() {
+                event.returnValue = '确定离开';
+            };
+
+            layer.close(loading);
+
+        },
+        error: function (xhr, editor) {
+            layer.close(loading);
+        },
+        customInsert: function (insertImg, result, editor) {
+            var img_id = '';
+            var imgList = $('#imgList_id').val();
+            var imgs = '';
+            for (var i=0;i<result.data.length;i++){
+                var url = result.data[i].url;
+                img_id += result.data[i].id + ',';
+                insertImg(url);
+            }
+            $('#imgList_id').val(imgList+img_id);
+        }
+    }
+    editor.create();
+  //监听提交
+function formSubmission(){
+    var params = {
+        url:"{:url('details/addData')}",
+        type:'post',
+        data:{
+            title:$('#title').val(),
+            subtitle:$('#subtitle').val(),
+            content:editor.txt.html(),
+            tag_id:$('#tagId').val()
+        },
+        sCallback:function (res) {
+            if(res == true){
+                window.onbeforeunload = null;
+                window.onunload = null;
+                layer.msg('添加成功', {icon: 6,time:1200,shade: [0.3, '#000']},function(){
+                    window.location.href="{:url('/admin/details')}"
+                });
+            }else{
+                layer.msg(res, {icon: 5,time:1200,shade: [0.3, '#000']});
+            }
+        }
+    };
+    window.base.getData(params);
+};
+</script>
+</body>
+</html>

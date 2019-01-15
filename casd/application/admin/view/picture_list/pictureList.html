@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{include title="图片列表管理" file="common/head"}
+<style>
+    .layui-table td{
+        height:80px;
+        line-height: 80px;
+    }
+    .layui-table td .laytable-cell-1-0-2{
+        height:80px;
+        line-height: 80px;
+    }
+</style>
+<body>
+{include file="common/header"}
+<!-- 主体区域 -->
+<div class="layui-form" style="padding:0 30px;">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>图片列表管理</legend>
+    </fieldset>
+    <button class="layui-btn" onclick="location.href='{:url('PictureList/add')}'">
+         <i class="layui-icon">&#xe608;</i> 添加
+    </button>
+    <table class="layui-table">
+    </table>
+    <script type="text/html" id="operation">
+        <a href="/admin/pictureList/edit/{{d.id}}" class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a onclick="del({{d.id}})" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+    <script type="text/html" id="categoryRes">
+            <a href="javascript:;" class="layui-btn layui-btn-xs">{{d.name}}</a>
+    </script>
+    <script type="text/html" id="imgUrl">
+        <img width="80" height="80" src="{{d.url}}" alt="">
+    </script>
+</div>
+{include file="common/footer"}
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '.layui-table'
+             ,url:"{:url('/admin/getPictureList')}"
+            ,cols: [[
+                {field:'id', width:80, title: 'ID', sort: true}
+                // ,{width:100 , title: '所属栏目',templet: '<div>{{d.item.name}}</div>'}
+                ,{width:100 ,align:'center', title: '所属栏目',toolbar: '#categoryRes'}
+                ,{width:260 ,align:'center', title: '缩略图',toolbar: '#imgUrl'}
+                ,{field:'title', width:300 , title: '名称'}
+                ,{field:'desc', width:400, title: '描述'}
+                ,{field:'create_time', width:180, title: '创建时间'}
+                ,{field:'update_time', title: '修改时间', width:180}
+                ,{fixed: 'right', minWidth:200, align:'center', toolbar: '#operation',title: '操作'}
+            ]]
+            ,page: true
+        });
+    });
+
+    function del(id) {
+        layer.alert('您确定删除吗？', {
+            icon: 3
+            , closeBtn: 1
+            , btn: ['确定', '取消']
+            , anim: 4
+            , yes: function () {
+                $.ajax({
+                    url: '/admin/pictureList/del/' + id,
+                    success: function (res) {
+                        if (res) {
+                            layer.msg('删除成功', {icon: 6, time: 1000,shade:[0.3]}, function () {
+                                location.reload();
+                            })
+                        }
+                    }
+                })
+            }
+            , no: function () {
+                location.reload();
+            }
+        });
+    };
+</script>
+</body>
+</html>
